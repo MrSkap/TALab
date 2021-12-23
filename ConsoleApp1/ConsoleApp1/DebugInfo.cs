@@ -1,8 +1,8 @@
 ﻿namespace AutomatLab
 {
-	struct DebugInfo
+	public struct DebugInfo
 	{
-		int line;
-		int pos;
+		public int line;
+		public int pos;
 	}
 }

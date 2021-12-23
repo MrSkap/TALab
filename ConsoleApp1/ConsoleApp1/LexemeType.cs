@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AutomatLab
 {
-	enum LexemeType
+	public enum LexemeType
 	{
 		VarName, //имя (идентификатор переменной)
 		IntValue, //целое число без знака
@@ -15,7 +15,9 @@ namespace AutomatLab
 		StringValue,
 		CharType,
 		CharValue,
-		ArrayType,
+		ArrayStringType,
+		ArrayIntType,
+		ArrayFloatType,
 		//if|else|while|int|string|char|float|read|write|abs|sqrt|sqr
 		If,
 		Else,

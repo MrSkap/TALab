@@ -15,16 +15,18 @@ namespace AutomatLab
 			FileStream testProg;
 			if (File.Exists(path)) testProg = File.OpenRead(path);
 			else testProg = File.Create(path);
+			string testProgInString = new StreamReader(testProg).ReadToEnd();
 			try
 			{
-				Analyzer textAnalyzer = new Analyzer();
+				Analyzer textAnalyzer = new Analyzer(testProgInString);
 				List<Lexeme> buff = textAnalyzer.GetData();
 
 				Console.WriteLine(testProg.Length);
 			}
-			catch
+			catch (Exception ex)
 			{
-
+				TextWriter errorWriter = Console.Error;
+				errorWriter.WriteLine(ex.Message);
 			}
 		}
 	}

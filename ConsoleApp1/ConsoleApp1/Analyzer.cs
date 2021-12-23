@@ -7,8 +7,6 @@ namespace AutomatLab
 	class Analyzer
 	{
 		string programText;
-		
-		
 		string program_text;
 		int current_index;
 		DebugInfo current_info;
@@ -63,7 +61,7 @@ namespace AutomatLab
 		}
 		public List<Lexeme>GetData()
 		{
-			return new List<Lexeme>();
+			return data;
 		}
 		Lexeme NextLexeme()
 		{
@@ -80,36 +78,43 @@ namespace AutomatLab
 				cur_ch = program_text[current_index];
 				while (current_index < program_text.Length && IsLetterOrNotMeaningSybols(cur_ch) || IsLetterOrNotMeaningSybols(cur_ch))
 				{
-					NextSybol(ref result, cur_ch);
+					NextSybol(ref result, ref cur_ch);
 				}
 				FindKeyWord(ref result);
-				
 			}
-			else if (Char.IsNumber(cur_ch))//читаем значение int
+			else if (Char.IsNumber(cur_ch))//читаем значение int или float
 			{
 				result.lexemeType = LexemeType.IntValue;
 				cur_ch = program_text[current_index];
 
 				while (current_index < program_text.Length && Char.IsNumber(cur_ch))
 				{
-					NextSybol(ref result, cur_ch);
+					NextSybol(ref result, ref cur_ch);
 				}
-
+				if(current_index< program_text.Length && cur_ch == '.')
+				{
+					result.lexemeType = LexemeType.FloatValue;
+					NextSybol(ref result, ref cur_ch);
+					while (current_index < program_text.Length && Char.IsNumber(cur_ch))
+					{
+						NextSybol(ref result, ref cur_ch);
+					}
+				}
 				if (current_index < program_text.Length && IsLetterOrNotMeaningSybols(cur_ch))
 				{
 					while (current_index < program_text.Length && IsLetterOrNotMeaningSybols(cur_ch))
 					{
-						NextSybol(ref result, cur_ch);
+						NextSybol(ref result, ref cur_ch);
 					}
 					result.lexemeType = LexemeType.Error;
 				}
 			}
-			else FindMeaningSymbol(ref result, cur_ch);
+			else FindMeaningSymbolOrString(ref result, cur_ch);
 			
 			return result;
 		}
 
-		private void FindMeaningSymbol(ref Lexeme result, char cur_ch)
+		private void FindMeaningSymbolOrString(ref Lexeme result, char cur_ch)
 		{
 			if (cur_ch == '{')
 			{
@@ -195,6 +200,16 @@ namespace AutomatLab
 				result.lexemeType = LexemeType.NotEqual;
 				result.value = "!=";
 			}
+			else if(cur_ch == '"' && current_index < program_text.Length)
+			{
+				current_index++;
+				result.lexemeType = LexemeType.StringType;
+				cur_ch = program_text[current_index];
+				while(current_index < program_text.Length && program_text[current_index] != '"')
+				{
+					NextSybol(ref result, ref cur_ch);
+				}
+			}
 
 		}
 
@@ -216,9 +231,17 @@ namespace AutomatLab
 			{
 				result.lexemeType = LexemeType.CharType;
 			}
-			else if (result.value == "array")//по идее его нет
+			else if (result.value == "arrayString")
 			{
-				result.lexemeType = LexemeType.ArrayType;
+				result.lexemeType = LexemeType.ArrayStringType;
+			}
+			else if (result.value == "arrayFloat")
+			{
+				result.lexemeType = LexemeType.ArrayFloatType;
+			}
+			else if (result.value == "arrayInt")
+			{
+				result.lexemeType = LexemeType.ArrayIntType;
 			}
 			else if (result.value == "if")
 			{
@@ -246,7 +269,7 @@ namespace AutomatLab
 			}
 		}
 
-		private void NextSybol(ref Lexeme lex, char ch)
+		private void NextSybol(ref Lexeme lex, ref char ch)
 		{
 			lex.value += ch;
 			current_index++;
