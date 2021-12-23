@@ -6,14 +6,13 @@ namespace AutomatLab
 {
 	class Analyzer
 	{
-		string programText;
 		string program_text;
 		int current_index;
 		DebugInfo current_info;
 		List<Lexeme> data;
 		public Analyzer(string program_Text)
 		{
-			programText = program_Text;
+			program_text = program_Text;
 		}
 		public void Run()
 		{
