@@ -227,10 +227,6 @@ namespace AutomatLab
 			{
 				result.lexemeType = LexemeType.StringType;
 			}
-			else if(result.value == "char")
-			{
-				result.lexemeType = LexemeType.CharType;
-			}
 			else if (result.value == "arrayString")
 			{
 				result.lexemeType = LexemeType.ArrayStringType;
