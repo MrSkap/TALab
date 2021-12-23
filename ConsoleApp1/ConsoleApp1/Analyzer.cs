@@ -209,6 +209,10 @@ namespace AutomatLab
 				{
 					NextSybol(ref result, ref cur_ch);
 				}
+				if(current_index >= program_text.Length)
+				{
+					result.lexemeType = LexemeType.Error;
+				}
 			}
 
 		}
