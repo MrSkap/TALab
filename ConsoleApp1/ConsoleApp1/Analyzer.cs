@@ -198,6 +198,7 @@ namespace AutomatLab
 			}
 			else if(cur_ch == '"' && current_index < program_text.Length)
 			{
+				result.value = result.value.Remove(result.value.Length - 1);
 				cur_ch = program_text[current_index];
 				current_index++;
 				result.lexemeType = LexemeType.StringType;
