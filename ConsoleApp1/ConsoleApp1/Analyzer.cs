@@ -30,9 +30,6 @@ namespace AutomatLab
 						case '\n':
 							++current_info.line; current_info.pos = 1;
 							break;
-						case '\t':
-							current_info.pos += 4;
-							break;
 					}
 				}
 
