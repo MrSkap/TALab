@@ -198,9 +198,9 @@ namespace AutomatLab
 			}
 			else if(cur_ch == '"' && current_index < program_text.Length)
 			{
+				cur_ch = program_text[current_index];
 				current_index++;
 				result.lexemeType = LexemeType.StringType;
-				cur_ch = program_text[current_index];
 				while(current_index < program_text.Length && program_text[current_index] != '"')
 				{
 					NextSybol(ref result, ref cur_ch);
