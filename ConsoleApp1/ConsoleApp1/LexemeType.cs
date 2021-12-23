@@ -13,8 +13,6 @@ namespace AutomatLab
 		FloatValue,
 		StringType,
 		StringValue,
-		CharType,
-		CharValue,
 		ArrayStringType,
 		ArrayIntType,
 		ArrayFloatType,
